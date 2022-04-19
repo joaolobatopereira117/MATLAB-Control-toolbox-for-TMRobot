@@ -458,55 +458,6 @@ classdef Class_TMRobot
             end            
         end
          
-%         function symPos(r,Pose) %Fix
-% 
-%             if(nargin==1)
-% 
-%                 q=r.getRealjoints();
-%                 
-%                 r.sym_model.plot(q*pi/180);
-%             else
-% 
-%                 q=r.I_Kinematics(Pose);
-%                 r.sym_model.plot(q*pi/180);
-%             end            
-%         end
-% 
-% 
-%        function symMove2pos(r,ni,Pose1,Pose2) %Fix
-% 
-%             T1=eye(4);
-%             T2=eye(4);
-% 
-%             T1(1:3,4)=Pose1(1:3);
-%             T1(1:3,1:3)=rpy2rotation(Pose1(4)*pi/180,Pose1(5)*pi/180,Pose1(6)*pi/180);
-% 
-%             if(nargin==4)
-%                 
-%                 T2(1:3,4)=Pose2(1:3);
-%                 T2(1:3,1:3)=rpy2rotation(Pose2(4)*pi/180,Pose2(5)*pi/180,Pose2(6)*pi/180);
-% 
-%                 T=ctraj(T1,T2,ni);
-%                 q=r.sym_model.ikine(T);
-% 
-%                 r.sym_model.plot(q);
-% 
-%             elseif(isobject(r.modbusClient))
-% 
-%                 pos=r.getRealpos();
-% 
-%                 T2(1:3,4)=pos(1:3);
-%                 T2(1:3,1:3)=rpy2rotation(pos(4)*pi/180,pos(5)*pi/180,pos(6)*pi/180);
-% 
-%                 T=ctraj(T2,T1,ni);
-%                 q=r.sym_model.ikine(T);
-% 
-%                 r.sym_model.plot(q);
-% 
-%             else
-%                 disp('Not enough input arguments');
-%             end
-%         end
 
 %% Gripper functions
 
