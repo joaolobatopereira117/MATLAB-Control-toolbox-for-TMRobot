@@ -4,21 +4,17 @@
 %the process;
 
 addpath(genpath('Individual function Library'));
-
 %% Connection
 ip="192.168.0.111";
 socketport=5890;
 modbusport=502;
 [client,m]=connect2controller(ip,socketport,modbusport); %establish connection
-
 %% Poses
 home_pos    = [220.004 -200.002 350.004 180 -0.001 141.999];
 component   = [160.501 -411.200 252.001 179.990 0.005 141.448];
 pcb         = [454.298 135.495 224.457 179.891 0.04 139.8];
-
 %% Movement
 closegripper(m,client);
-
 while(1)
     for i=0:2
             
@@ -48,5 +44,4 @@ while(1)
 
     while(getDI(m,7)==0) %waiting for button pressed;
     end
-
 end   

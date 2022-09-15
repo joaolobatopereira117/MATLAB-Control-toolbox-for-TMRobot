@@ -19,40 +19,33 @@ classdef Class_TMRobot
 
     methods
     
-        function r=Class_TMRobot(varargin)
-            
-
+        function r=Class_TMRobot(varargin)       
             addpath(genpath('Individual function Library'));
 
             L(1)= Revolute('d', 145.1, ...   % link length (Dennavit-Hartenberg notation)
                 'a', 0, ...               % link offset (Dennavit-Hartenberg notation)
                 'alpha', -pi/2, ...        % link twist (Dennavit-Hartenberg notation)
-                'qlim', [-277 277]*pi/180 ); % minimum and maximum joint angle
-            
+                'qlim', [-277 277]*pi/180 ); % minimum and maximum joint angle            
             L(2)= Revolute('offset', -pi/2, ...%-pi/2
                 'd', 0, ...   % link length (Dennavit-Hartenberg notation)
                 'a', 329, ...               % link offset (Dennavit-Hartenberg notation)
                 'alpha', 0, ...        % link twist (Dennavit-Hartenberg notation)
-                'qlim', [-187 187]*pi/180 ); % minimum and maximum joint angle
-            
+                'qlim', [-187 187]*pi/180 ); % minimum and maximum joint angle            
             L(3)= Revolute('offset', 0, ...
                 'd', 0, ...   % link length (Dennavit-Hartenberg notation)
                 'a', 311.5, ...               % link offset (Dennavit-Hartenberg notation)
                 'alpha', 0, ...        % link twist (Dennavit-Hartenberg notation)
-                'qlim', [-162 162]*pi/180 ); % minimum and maximum joint angle
-            
+                'qlim', [-162 162]*pi/180 ); % minimum and maximum joint angle       
             L(4)= Revolute('offset', pi/2, ...%pi/2
                 'd', -122.2, ...   % link length (Dennavit-Hartenberg notation)
                 'a', 0, ...               % link offset (Dennavit-Hartenberg notation)
                 'alpha', pi/2, ...        % link twist (Dennavit-Hartenberg notation)
                 'qlim', [-187 187]*pi/180 ); % minimum and maximum joint angle
-            
             L(5)= Revolute('offset', 0, ...
                 'd', 106, ...   % link length (Dennavit-Hartenberg notation)
                 'a', 0, ...               % link offset (Dennavit-Hartenberg notation)
                 'alpha', pi/2, ...        % link twist (Dennavit-Hartenberg notation)
-                'qlim', [-187 187]*pi/180 ); % minimum and maximum joint angle
-            
+                'qlim', [-187 187]*pi/180 ); % minimum and maximum joint angle 
             L(6)= Revolute('offset', 0, ...
                 'd', 114.4, ...   % link length (Dennavit-Hartenberg notation)
                 'a', 0, ...               % link offset (Dennavit-Hartenberg notation)
@@ -60,7 +53,6 @@ classdef Class_TMRobot
                 'qlim', [-277 277]*pi/180 ); % minimum and maximum joint angle
 
             default.sym_model=SerialLink(L,'name', 'TM5_700'); %Default options for the tm5_700 robot
-            default.iprobot="192.168.0.111";
             default.socketport=5890;
             default.modbusport=502;
             
@@ -83,10 +75,7 @@ classdef Class_TMRobot
                     % otherwise if there's a set default, use that
                     r.(p) = default.(p);
                 end
-             end
-
-            
-
+            end
         end
 
 %% Connection functions        
@@ -448,7 +437,7 @@ classdef Class_TMRobot
 
         function symJoint_c(r,Pose)
 
-            if(nargin==1)
+            if (nargin==1) && isobject(r.modbusClient)
 
                 q=r.getRealjoints_c();
                 
@@ -457,7 +446,18 @@ classdef Class_TMRobot
                 symJoint(r.sym_model,Pose);
             end            
         end
-         
+
+        function symJoinTraj_c(r,jpos1,jpos2,t)
+           
+           if(r.isjointReach_c(jpos1) && r.isjointReach_c(jpos2))
+
+            symJoinTraj(r.sym_model,jpos1,jpos2,t);
+
+           else
+             disp('Unreachable pose!!!');
+           end
+
+        end
 
 %% Gripper functions
 
