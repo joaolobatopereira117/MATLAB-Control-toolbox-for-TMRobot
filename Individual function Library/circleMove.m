@@ -53,9 +53,9 @@ function [check,move]=circleMove(client,m,Endpose,Passpose,arcAng,velperc)
     
         fullcomand=['$' headerplusdata '*' checksum(headerplusdata) ];
     
-        writeline(r.tcpClient,fullcomand);
+        writeline(client,fullcomand);
     
-        message=char(readline(r.tcpClient));
+        message=char(readline(client));
     
         if(message(12:13) == "OK")
             check='Valid_comand';
@@ -66,7 +66,7 @@ function [check,move]=circleMove(client,m,Endpose,Passpose,arcAng,velperc)
         while(r.tcpClient.NumBytesAvailable==0)
         end
     
-        message=char(readline(r.tcpClient));
+        message=char(readline(client));
     
         if(message(17:20)=="true")
             move='Movement executed';

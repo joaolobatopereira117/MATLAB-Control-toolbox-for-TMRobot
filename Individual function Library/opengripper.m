@@ -1,4 +1,5 @@
-%%This function requires extra nodes on the TMflow project for this specific
+%%This function requires extra nodes on the TMflow
+%project for this specific
 %gripper;
 
 %Opens gripper fingers  
